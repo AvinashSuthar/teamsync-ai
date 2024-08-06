@@ -40,3 +40,8 @@ mongoose
   .connect(databaseUrl)
   .then(() => console.log("DB connected...."))
   .catch((err) => console.log(err.message));
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
