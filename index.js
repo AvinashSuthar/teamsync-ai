@@ -21,10 +21,10 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.json());
 app.use("/uploads/profiles", express.static("uploads/profiles"));
 app.use("/uploads/files", express.static("uploads/files"));
 app.use(cookieParser());
-app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactRoutes);
 app.use("/api/messages", MessageRoutes);
