@@ -14,7 +14,7 @@ const setupSocket = (server) => {
 
   const disconnect = (socket) => {
     console.log(`Client Disconnected : ${socket.id}`);
-    for (const [userId, socketId] of userSocketMap.entries()) {
+    for (const [ socketId] of userSocketMap.entries()) {
       if (socketId === socket.id) {
         userSocketMap.delete(useId);
         break;
