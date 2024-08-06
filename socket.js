@@ -1,4 +1,3 @@
-import { useId } from "react";
 import { Server as SocketIOServer } from "socket.io";
 import Message from "./models/messagesModel.js";
 import Channel from "./models/ChannelModel.js";
