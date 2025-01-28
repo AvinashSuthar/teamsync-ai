@@ -14,7 +14,6 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3003;
 const databaseUrl = process.env.DATABASE_URL;
-
 app.use(
   cors({
     origin: process.env.ORIGIN,
@@ -23,6 +22,9 @@ app.use(
   })
 );
 app.use(express.json());
+
+
+
 app.use("/uploads/profiles", express.static("uploads/profiles"));
 app.use("/uploads/files", express.static("uploads/files"));
 app.use(cookieParser());
