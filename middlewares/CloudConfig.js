@@ -14,8 +14,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
       folder: 'profilePic',
-      format: async (req, file) => "png",  // Convert all to PNG
-      public_id: (req, file) => Date.now() + "-" + file.originalname, // Unique name
+      format: async (req, file) => `png`,  // Convert all to PNG
     },
 });
 
