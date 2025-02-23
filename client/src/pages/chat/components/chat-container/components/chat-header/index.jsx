@@ -2,17 +2,20 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getColor } from "@/lib/utils";
 import { useAppStore } from "@/store";
 import { HOST } from "@/utils/constants";
-import React from "react";
+import React, { useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { FaEdit } from "react-icons/fa";
 import { FiEdit, FiEdit2, FiEdit3 } from "react-icons/fi";
 import { RiCloseFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import EditChannel from "../../../contacts-container/components/edit-channel";
 const ChatHeader = () => {
   const navigate = useNavigate();
-  const { closeChat, selectedChatData, selectedChatType } = useAppStore();
+  const [open, setOpen] = useState(false);
+  const { closeChat, selectedChatData, selectedChatType, userInfo } =
+    useAppStore();
   const editChannel = () => {
-    navigate("/channel/edit");
+    setOpen(true);
   };
   return (
     <div className="h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between px-20">
@@ -55,6 +58,7 @@ const ChatHeader = () => {
             )}
           </div>
           <div>
+            {console.log(selectedChatData)}
             {selectedChatType === "channel" && selectedChatData.name}
             {selectedChatType === "contact" && selectedChatData.firstName
               ? `${selectedChatData.firstName} ${selectedChatData.lastName}`
@@ -68,14 +72,19 @@ const ChatHeader = () => {
           >
             <RiCloseFill className="text-4xl" />
           </button>
-          {selectedChatType === "channel" && (
-            <button
-              onClick={editChannel}
-              className="text-neutral-500 focus:border-none focus:outline-none focus:text-white duration-300 transition-all"
-            >
-              <CiMenuKebab className="text-3xl size-6 hover:text-white" />
-            </button>
-          )}
+          {selectedChatType === "channel" &&
+            selectedChatData.admin === userInfo.id && (
+              <button
+                onClick={editChannel}
+                className="text-neutral-500 focus:border-none focus:outline-none focus:text-white duration-300 transition-all"
+              >
+                {console.log(selectedChatData)}
+                <EditChannel
+                  channel={selectedChatData}
+                  members={selectedChatData.members}
+                />
+              </button>
+            )}
         </div>
       </div>
     </div>

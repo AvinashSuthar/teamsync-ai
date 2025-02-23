@@ -29,12 +29,51 @@ export const createChannel = async (req, res, next) => {
   }
 };
 
+export const editChannel = async (req, res, next) => {
+  try {
+    const { name, members, id } = req.body;
+    console.log("here", name, members, id);
+    const userId = req.userId;
+    const admin = await User.findById(userId);
+    if (!admin) {
+      res.status(400).send("Admin user not found");
+    }
+    const validMembers = await User.find({ _id: { $in: members } });
+    if (validMembers.length !== members.length) {
+      return res.status(400).send("Some members are not valid users");
+    }
+    const newChannel = await Channel.findByIdAndUpdate(
+      id,
+      {
+        name: name,
+        members: members,
+      },
+      {
+        new: true,
+      }
+    ).populate({
+      path: "members",
+      select: "firstName lastName _id",
+    });
+
+    return res.status(200).json({ channel: newChannel });
+  } catch (error) {
+    console.log({ error });
+    return res.status(500).send("Internal server error");
+  }
+};
+
 export const getUserChannels = async (req, res, next) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.userId);
     const channels = await Channel.find({
       $or: [{ admin: userId }, { members: userId }],
-    }).sort({ updatedAt: -1 });
+    })
+      .sort({ updatedAt: -1 })
+      .populate({
+        path: "members",
+        select: "firstName lastName _id",
+      });
 
     return res.status(201).json({ channels });
   } catch (error) {

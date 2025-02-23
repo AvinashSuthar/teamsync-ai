@@ -7,7 +7,7 @@ import { useAppStore } from "./store";
 import { apiClient } from "./lib/api-client";
 import { GET_USER_INFO } from "./utils/constants";
 import Loader from "./components/Loader";
-import About from "./pages/about/about";
+import About from "./pages/about/About";
 import ChannelInfo from "./pages/channel/ChannelInfo";
 
 const PrivateRoute = ({ children }) => {
