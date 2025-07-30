@@ -29,6 +29,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactRoutes);
 app.use("/api/messages", MessageRoutes);
 app.use("/api/channel", channelRoutes);
+app.get("/", (req, res) => {
+  res.send("Welcome to the Chat Application API");
+});
 
 const server = app.listen(port, () => {
   console.log(`Server is runnig at http://localhost:${port}`);
